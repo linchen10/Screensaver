@@ -4,6 +4,7 @@
 import pygame, sys, random
 from pygame import Vector2
 
+#initialize pygame
 pygame.init()
 cell_size = 40
 cell_num = 20
@@ -33,28 +34,36 @@ class BLOCK:
     def move(self):
         self.block_rect.x += self.x_move
         self.block_rect.y += self.y_move
-         
+    
+    #makes sure the block will bounce if it hits the sides of the screen
     def collision(self):
         if self.block_rect.right >= cell_size * cell_num*1.5 or self.block_rect.left <= 0:
             self.x_move *= -1
         if self.block_rect.bottom >= cell_size * cell_num or self.block_rect.top <= 0:
             self.y_move *= -1
-            
+
+#two blocks
 block = BLOCK()
 block2 = BLOCK()
 
 while True:
+    #closes pygame and sys if x is clicked
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+    #fills the screen with black
     screen.fill(pygame.Color('black'))
+    
     block.draw_block()
     block.move()
     block.collision()
     block2.draw_block()
     block2.move()
     block2.collision()
-
+    
+    #updates screen
     pygame.display.update()
+    
+    #60 fps
     clock.tick(60)
